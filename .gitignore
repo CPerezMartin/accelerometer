@@ -26,6 +26,16 @@ dist/
 # JetBrains IDE
 .idea/
 
+# Editor directories and files
+.idea
+.history
+.vscode
+.editorconfig
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
 # Unit test reports
 TEST*.xml
 

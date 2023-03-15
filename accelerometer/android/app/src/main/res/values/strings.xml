@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">accelerometer</string>
+    <string name="title_activity_main">accelerometer</string>
+    <string name="package_name">bfi.accelerometer.app</string>
+    <string name="custom_url_scheme">bfi.accelerometer.app</string>
+</resources>
