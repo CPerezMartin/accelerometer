@@ -6,6 +6,7 @@
   "author": "Carlos Pérez Martín <carlos.perez@brooklynfitboxing.com>",
   "private": true,
   "scripts": {
+    "build": "quasar build && npx cap sync",
     "lint": "eslint --ext .js,.vue ./",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0"
@@ -14,6 +15,7 @@
     "@capacitor/android": "^4.7.0",
     "@capacitor/cli": "^4.7.0",
     "@capacitor/core": "^4.7.0",
+    "@capacitor/motion": "^4.0.2",
     "@quasar/extras": "^1.0.0",
     "core-js": "^3.6.5",
     "quasar": "^2.6.0",

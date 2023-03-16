@@ -57,5 +57,7 @@ npx cap open iOS
 ### Convert Webview files to native
 ```bash
 quasar build
-npx cap sync
+npx cap sync 
+# or
+npm run build
 ```
