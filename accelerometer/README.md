@@ -2,7 +2,19 @@
 
 Testing accelerometer con webpack
 
-## Install the dependencies
+### Setup enviroment
+
+Before start, check you have installed 
+Node v14.19.0+
+Npm v6.14.16+
+Java v11.0+
+Android Studio to build for android
+XCode to build for iOS
+
+At date 17/03/2023 Python for Windows system produce errors with npm. Your python version should be v3.10, don't use v3.11
+In windows, verify PATH system variables for android SDK, python and Java
+
+### Install the dependencies
 ```bash
 yarn
 # or
@@ -59,5 +71,5 @@ npx cap open iOS
 quasar build
 npx cap sync 
 # or
-npm run build
+npm run build 
 ```
