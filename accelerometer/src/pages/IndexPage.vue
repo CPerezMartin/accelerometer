@@ -1,23 +1,23 @@
 <template>
   <q-page class="flex flex-center page">
-    <h4 class="flex-center justify-evenly">Accelerometer Testing</h4>
-    <div>
-      <div class="full-width column no-wrap justify-between items-center content-center">
-        <label for="acel_x">Aceleración X: </label>
-        <p id="acel_x">{{ acel_x }}</p>
+    <h4 class="flex-center justify-evenly">Acelerómetro Beta</h4>
+    <div class="full-width">
+      <div class="acel-row col-12 row no-wrap justify-start items-center content-center">
+        <label for="acel_x" class="acel-label col-1">X: </label>
+        <div id="acel_x" class="col-11">{{ acel_x }}</div>
       </div>
-      <div class="full-width column no-wrap justify-between items-center content-center">
-        <label for="acel_z">Aceleración Z: </label>
-        <p id="acel_y">{{ acel_y }}</p>
+      <div class="acel-row col-12 row no-wrap justify-start items-center content-center">
+        <label for="acel_z" class="acel-label col-1">Y: </label>
+        <div id="acel_y" class="col-11">{{ acel_y }}</div>
       </div>
-      <div class="full-width column no-wrap justify-between items-center content-center">
-        <label for="acel_y">Aceleración Y: </label>
-        <p id="acel_z">{{ acel_z}}</p>
+      <div class="acel-row col-12 row no-wrap justify-start items-center content-center">
+        <label for="acel_y" class="acel-label col-1">Z: </label>
+        <div id="acel_z" class="col-11">{{ acel_z}}</div>
       </div>
     </div>
-    <div class="btn-group">
-      <q-btn color="primary" label="Iniciar Acelerometro" @click="startAcel" />
-      <q-btn color="primary" label="Parar Acelerometro" @click="stopAcel" />
+    <div class="btn-group fit row wrap justify-evenly items-center content-center">
+      <q-btn color="primary" label="Iniciar" class="col-auto self-center" @click="startAcel" />
+      <q-btn color="primary" label="Parar" class="col-auto self-center" @click="stopAcel" />
     </div>
   </q-page>
 </template>
@@ -31,9 +31,9 @@ export default defineComponent({
 
 data()
   {  
-      let acel_x =0;
-      let acel_y =0;
-      let acel_z =0;
+      let acel_x = 0;
+      let acel_y = 0;
+      let acel_z = 0;
     return {acel_x, acel_y, acel_z}
   },  
   methods: {
@@ -71,12 +71,14 @@ data()
   flex-wrap: nowrap;
   justify-content: flex-start;
 
+  .acel-row {
+    margin: 0 0.5em;
+    font-size: 14pt;
+    .acel-label {
+      font-weight: bold;
+    }
+  }
     .btn-group {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    align-content: stretch;
     }
   button {
     margin: 0.25em;

@@ -2,5 +2,6 @@
   "appId": "bfi.accelerometer.app",
   "appName": "Accelerometer",
   "webDir": "dist/spa",
-  "bundledWebRuntime": false
+  "bundledWebRuntime": false,
+  "requireConfigFile": false
 }
