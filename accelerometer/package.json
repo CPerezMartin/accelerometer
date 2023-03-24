@@ -9,7 +9,9 @@
     "build": "quasar build && npx cap sync",
     "lint": "eslint --ext .js,.vue ./",
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "ionic:build": "npm run build",
+    "ionic:serve": "quasar dev"
   },
   "dependencies": {
     "@capacitor/android": "^4.7.0",

@@ -1,0 +1,7 @@
+{
+  "name": "accelerometer",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}
