@@ -100,8 +100,10 @@
 
 <script>
 import { defineComponent } from "vue";
+import { isPlatform } from "@ionic/vue";
 import { exportFile } from "quasar";
 import { Motion } from "@capacitor/motion";
+import { Filesystem, Directory, Encoding } from "@capacitor/filesystem";
 
 export default defineComponent({
   name: "IndexPage",
@@ -250,7 +252,25 @@ export default defineComponent({
         await Motion.removeAllListeners();
       } catch (e) {
         // Handle error
-        console.error("error: ", e);
+        console.error("255::error: ", e);
+        return;
+      }
+    },
+    async writeAndroidFile(data) {
+      try {
+        await Filesystem.writeFile({
+          path: "datos_aceleracion.csv",
+          data: data,
+          directory: Directory.Documents,
+          encoding: Encoding.UTF8,
+        });
+      } catch (e) {
+        console.error("268::error:: ", e);
+        $q.notify({
+          message: e.message,
+          color: "negative",
+          icon: "warning",
+        });
         return;
       }
     },
@@ -272,24 +292,28 @@ export default defineComponent({
     },
     exportTable() {
       // naive encoding to csv format
+      console.log("Platform:: ", isPlatform("android"));
       const content = [this.columns.map((col) => this.wrapCsvValue(col.label))]
-      .concat(
-        this.accelRecords.map((row) =>
-        this.columns
-        .map((col) =>
-        this.wrapCsvValue(
-          typeof col.field === "function"
-          ? col.field(row)
-          : row[col.field === void 0 ? col.name : col.field],
-          col.format,
-          row
+        .concat(
+          this.accelRecords.map((row) =>
+            this.columns
+              .map((col) =>
+                this.wrapCsvValue(
+                  typeof col.field === "function"
+                    ? col.field(row)
+                    : row[col.field === void 0 ? col.name : col.field],
+                  col.format,
+                  row
+                )
+              )
+              .join(",")
           )
-          )
-          .join(",")
-          )
-          )
-          .join("\r\n");
-          
+        )
+        .join("\r\n");
+      if (isPlatform("android")) {
+        this.writeAndroidFile(content);
+      }
+
       const status = exportFile("datos_aceleracion.csv", content, "text/csv");
 
       if (status !== true) {

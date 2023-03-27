@@ -14,10 +14,12 @@
     "ionic:serve": "quasar dev"
   },
   "dependencies": {
-    "@capacitor/android": "^4.7.0",
-    "@capacitor/cli": "^4.7.0",
-    "@capacitor/core": "^4.7.0",
+    "@capacitor/android": "4.7.1",
+    "@capacitor/cli": "4.7.1",
+    "@capacitor/core": "4.7.1",
+    "@capacitor/filesystem": "^4.1.4",
     "@capacitor/motion": "^4.0.2",
+    "@ionic/vue": "^6.7.0",
     "@quasar/extras": "^1.0.0",
     "core-js": "^3.6.5",
     "quasar": "^2.6.0",
