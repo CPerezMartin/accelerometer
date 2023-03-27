@@ -99,7 +99,8 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
+import { exportFile } from "quasar";
 import { Motion } from "@capacitor/motion";
 
 export default defineComponent({
@@ -113,7 +114,7 @@ export default defineComponent({
 
     /** array to save acceleration data with timestamp. Format:: timestamp, x, y, z */
     let accelRecords = [];
-    // let accelRecords = [
+    // accelRecords = [
     //   {
     //     timestamp: 13,
     //     acel_x: 10,
@@ -122,37 +123,37 @@ export default defineComponent({
     //   },
     //   {
     //     timestamp: 124,
-    //     acel_x: 11,
+    //     acel_x: -11,
     //     acel_5: 2,
     //     acel_z: 3,
     //   },
     //   {
     //     timestamp: 125,
     //     acel_x: 12,
-    //     acel_5: 2,
+    //     acel_5: -2,
     //     acel_z: 3,
     //   },
     //   {
     //     timestamp: 126,
     //     acel_x: 14,
     //     acel_5: 2,
-    //     acel_z: 3,
+    //     acel_z: -3,
     //   },
     //   {
     //     timestamp: 121,
-    //     acel_x: 13,
-    //     acel_5: 2,
-    //     acel_z: 3,
+    //     acel_x: -13,
+    //     acel_5: -2,
+    //     acel_z: -3,
     //   },
     //   {
     //     timestamp: 122,
     //     acel_x: 15,
-    //     acel_5: 2,
+    //     acel_5: -2,
     //     acel_z: 3,
     //   },
     //   {
     //     timestamp: 120,
-    //     acel_x: 16,
+    //     acel_x: -16,
     //     acel_5: 2,
     //     acel_z: 3,
     //   },
@@ -160,7 +161,7 @@ export default defineComponent({
     //     timestamp: 123,
     //     acel_x: 17,
     //     acel_5: 2,
-    //     acel_z: 3,
+    //     acel_z: -3,
     //   },
     //   {
     //     timestamp: 127,
@@ -170,20 +171,20 @@ export default defineComponent({
     //   },
     //   {
     //     timestamp: 125,
-    //     acel_x: 19,
-    //     acel_5: 2,
-    //     acel_z: 3,
+    //     acel_x: -19,
+    //     acel_5: -2,
+    //     acel_z: -3,
     //   },
     //   {
     //     timestamp: 124,
-    //     acel_x: 1,
+    //     acel_x: -1,
     //     acel_5: 20,
-    //     acel_z: 3,
+    //     acel_z: -3,
     //   },
     //   {
     //     timestamp: 129,
-    //     acel_x: 1,
-    //     acel_5: 21,
+    //     acel_x: -1,
+    //     acel_5: -21,
     //     acel_z: 3,
     //   },
     // ];
@@ -196,7 +197,7 @@ export default defineComponent({
         name: "timestamp",
         label: "Hora de registro",
         field: "timestamp",
-        align: "left",
+        align: "right",
       },
     ];
     return {
@@ -204,7 +205,6 @@ export default defineComponent({
       acel_y,
       acel_z,
       min,
-
       accelRecords,
       columns,
     };
@@ -272,26 +272,25 @@ export default defineComponent({
     },
     exportTable() {
       // naive encoding to csv format
-      console.log("Testing: ", -this.min);
-      const content = [this.columns.map((col) => wrapCsvValue(col.label))]
-        .concat(
-          rows.map((row) =>
-            columns
-              .map((col) =>
-                wrapCsvValue(
-                  typeof col.field === "function"
-                    ? col.field(row)
-                    : row[col.field === void 0 ? col.name : col.field],
-                  col.format,
-                  row
-                )
-              )
-              .join(",")
+      const content = [this.columns.map((col) => this.wrapCsvValue(col.label))]
+      .concat(
+        this.accelRecords.map((row) =>
+        this.columns
+        .map((col) =>
+        this.wrapCsvValue(
+          typeof col.field === "function"
+          ? col.field(row)
+          : row[col.field === void 0 ? col.name : col.field],
+          col.format,
+          row
           )
-        )
-        .join("\r\n");
-
-      const status = exportFile("table-export.csv", content, "text/csv");
+          )
+          .join(",")
+          )
+          )
+          .join("\r\n");
+          
+      const status = exportFile("datos_aceleracion.csv", content, "text/csv");
 
       if (status !== true) {
         $q.notify({
