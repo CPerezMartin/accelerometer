@@ -252,7 +252,7 @@ export default defineComponent({
         await Motion.removeAllListeners();
       } catch (e) {
         // Handle error
-        console.error("255::error: ", e);
+        console.error("stopAcel::error: ", e);
         return;
       }
     },
@@ -265,7 +265,7 @@ export default defineComponent({
           encoding: Encoding.UTF8,
         });
       } catch (e) {
-        console.error("268::error:: ", e);
+        console.error("writeAndroidFile::error:: ", e);
         $q.notify({
           message: e.message,
           color: "negative",
