@@ -256,10 +256,16 @@ export default defineComponent({
         return;
       }
     },
+    newFileName() {
+      const name = 'datos_acelereacion'
+      const d = new Date();
+      return `${name}_${d.getFullYear()}${d.getMonth()}${d.getDay()}${d.getHours()}${d.getMinutes()}${d.getSeconds()}${d.getMilliseconds()}.csv`
+      
+    },
     async writeAndroidFile(data) {
       try {
         await Filesystem.writeFile({
-          path: "datos_aceleracion.csv",
+          path: this.newFileName(),
           data: data,
           directory: Directory.Documents,
           encoding: Encoding.UTF8,
@@ -314,7 +320,7 @@ export default defineComponent({
         this.writeAndroidFile(content);
       }
 
-      const status = exportFile("datos_aceleracion.csv", content, "text/csv");
+      const status = exportFile(this.newFileName(), content, "text/csv");
 
       if (status !== true) {
         $q.notify({
