@@ -116,80 +116,80 @@ export default defineComponent({
 
     /** array to save acceleration data with timestamp. Format:: timestamp, x, y, z */
     let accelRecords = [];
-    // accelRecords = [
-    //   {
-    //     timestamp: 13,
-    //     acel_x: 10,
-    //     acel_5: 2,
-    //     acel_z: 3,
-    //   },
-    //   {
-    //     timestamp: 124,
-    //     acel_x: -11,
-    //     acel_5: 2,
-    //     acel_z: 3,
-    //   },
-    //   {
-    //     timestamp: 125,
-    //     acel_x: 12,
-    //     acel_5: -2,
-    //     acel_z: 3,
-    //   },
-    //   {
-    //     timestamp: 126,
-    //     acel_x: 14,
-    //     acel_5: 2,
-    //     acel_z: -3,
-    //   },
-    //   {
-    //     timestamp: 121,
-    //     acel_x: -13,
-    //     acel_5: -2,
-    //     acel_z: -3,
-    //   },
-    //   {
-    //     timestamp: 122,
-    //     acel_x: 15,
-    //     acel_5: -2,
-    //     acel_z: 3,
-    //   },
-    //   {
-    //     timestamp: 120,
-    //     acel_x: -16,
-    //     acel_5: 2,
-    //     acel_z: 3,
-    //   },
-    //   {
-    //     timestamp: 123,
-    //     acel_x: 17,
-    //     acel_5: 2,
-    //     acel_z: -3,
-    //   },
-    //   {
-    //     timestamp: 127,
-    //     acel_x: 18,
-    //     acel_5: 2,
-    //     acel_z: 3,
-    //   },
-    //   {
-    //     timestamp: 125,
-    //     acel_x: -19,
-    //     acel_5: -2,
-    //     acel_z: -3,
-    //   },
-    //   {
-    //     timestamp: 124,
-    //     acel_x: -1,
-    //     acel_5: 20,
-    //     acel_z: -3,
-    //   },
-    //   {
-    //     timestamp: 129,
-    //     acel_x: -1,
-    //     acel_5: -21,
-    //     acel_z: 3,
-    //   },
-    // ];
+    accelRecords = [
+      {
+        timestamp: 13,
+        acel_x: 10,
+        acel_y: 2,
+        acel_z: 3,
+      },
+      {
+        timestamp: 124,
+        acel_x: -11,
+        acel_y: 2,
+        acel_z: 3,
+      },
+      {
+        timestamp: 125,
+        acel_x: 12,
+        acel_y: -2,
+        acel_z: 3,
+      },
+      {
+        timestamp: 126,
+        acel_x: 14,
+        acel_y: 2,
+        acel_z: -3,
+      },
+      {
+        timestamp: 121,
+        acel_x: -13,
+        acel_y: -2,
+        acel_z: -3,
+      },
+      {
+        timestamp: 122,
+        acel_x: 15,
+        acel_y: -2,
+        acel_z: 3,
+      },
+      {
+        timestamp: 120,
+        acel_x: -16,
+        acel_y: 2,
+        acel_z: 3,
+      },
+      {
+        timestamp: 123,
+        acel_x: 17,
+        acel_y: 2,
+        acel_z: -3,
+      },
+      {
+        timestamp: 127,
+        acel_x: 18,
+        acel_y: 2,
+        acel_z: 3,
+      },
+      {
+        timestamp: 125,
+        acel_x: -19,
+        acel_y: -2,
+        acel_z: -3,
+      },
+      {
+        timestamp: 124,
+        acel_x: -1,
+        acel_y: 20,
+        acel_z: -3,
+      },
+      {
+        timestamp: 129,
+        acel_x: -1,
+        acel_y: -21,
+        acel_z: 3,
+      },
+    ];
 
     const columns = [
       { name: "x_Axys", label: "Eje X", field: "acel_x", align: "right" },
@@ -200,6 +200,7 @@ export default defineComponent({
         label: "Hora de registro",
         field: "timestamp",
         align: "right",
+        sortable: true
       },
     ];
     return {
@@ -257,10 +258,9 @@ export default defineComponent({
       }
     },
     newFileName() {
-      const name = 'datos_acelereacion'
+      const name = "datos_acelereacion";
       const d = new Date();
-      return `${name}_${d.getFullYear()}${d.getMonth()}${d.getDay()}${d.getHours()}${d.getMinutes()}${d.getSeconds()}${d.getMilliseconds()}.csv`
-      
+      return `${name}_${d.getFullYear()}${d.getMonth()}${d.getDay()}${d.getHours()}${d.getMinutes()}${d.getSeconds()}${d.getMilliseconds()}.csv`;
     },
     async writeAndroidFile(data) {
       try {
@@ -333,7 +333,7 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .page {
   display: flex;
   flex-direction: column;
@@ -375,15 +375,28 @@ export default defineComponent({
 
   .acel_table {
     margin: 1em 0;
+    height: 310px;
 
-    tbody {
-      tr:nth-child(5n) {
-        background-color: lightblue;
-      }
+    thead  tr:first-child th{
+      background-color: aliceblue;
     }
 
-    td:first-child {
-      background-color: lightblue;
+    thead tr th {
+      position: sticky;
+      z-index: 1;
+    }
+    thead tr:first-child th {
+      top: 0;
+    }
+
+    &.q-table--loading thead tr:last-child th {
+      top: 48px;
+    }
+    tbody {
+      scroll-margin-top: 48px;
+      tr:nth-child(5n) {
+        background-color: aliceblue;
+      }
     }
   }
 }
