@@ -116,80 +116,80 @@ export default defineComponent({
 
     /** array to save acceleration data with timestamp. Format:: timestamp, x, y, z */
     let accelRecords = [];
-    accelRecords = [
-      {
-        timestamp: 13,
-        acel_x: 10,
-        acel_y: 2,
-        acel_z: 3,
-      },
-      {
-        timestamp: 124,
-        acel_x: -11,
-        acel_y: 2,
-        acel_z: 3,
-      },
-      {
-        timestamp: 125,
-        acel_x: 12,
-        acel_y: -2,
-        acel_z: 3,
-      },
-      {
-        timestamp: 126,
-        acel_x: 14,
-        acel_y: 2,
-        acel_z: -3,
-      },
-      {
-        timestamp: 121,
-        acel_x: -13,
-        acel_y: -2,
-        acel_z: -3,
-      },
-      {
-        timestamp: 122,
-        acel_x: 15,
-        acel_y: -2,
-        acel_z: 3,
-      },
-      {
-        timestamp: 120,
-        acel_x: -16,
-        acel_y: 2,
-        acel_z: 3,
-      },
-      {
-        timestamp: 123,
-        acel_x: 17,
-        acel_y: 2,
-        acel_z: -3,
-      },
-      {
-        timestamp: 127,
-        acel_x: 18,
-        acel_y: 2,
-        acel_z: 3,
-      },
-      {
-        timestamp: 125,
-        acel_x: -19,
-        acel_y: -2,
-        acel_z: -3,
-      },
-      {
-        timestamp: 124,
-        acel_x: -1,
-        acel_y: 20,
-        acel_z: -3,
-      },
-      {
-        timestamp: 129,
-        acel_x: -1,
-        acel_y: -21,
-        acel_z: 3,
-      },
-    ];
+    // accelRecords = [
+    //   {
+    //     timestamp: 13,
+    //     acel_x: 10,
+    //     acel_y: 2,
+    //     acel_z: 3,
+    //   },
+    //   {
+    //     timestamp: 124,
+    //     acel_x: -11,
+    //     acel_y: 2,
+    //     acel_z: 3,
+    //   },
+    //   {
+    //     timestamp: 125,
+    //     acel_x: 12,
+    //     acel_y: -2,
+    //     acel_z: 3,
+    //   },
+    //   {
+    //     timestamp: 126,
+    //     acel_x: 14,
+    //     acel_y: 2,
+    //     acel_z: -3,
+    //   },
+    //   {
+    //     timestamp: 121,
+    //     acel_x: -13,
+    //     acel_y: -2,
+    //     acel_z: -3,
+    //   },
+    //   {
+    //     timestamp: 122,
+    //     acel_x: 15,
+    //     acel_y: -2,
+    //     acel_z: 3,
+    //   },
+    //   {
+    //     timestamp: 120,
+    //     acel_x: -16,
+    //     acel_y: 2,
+    //     acel_z: 3,
+    //   },
+    //   {
+    //     timestamp: 123,
+    //     acel_x: 17,
+    //     acel_y: 2,
+    //     acel_z: -3,
+    //   },
+    //   {
+    //     timestamp: 127,
+    //     acel_x: 18,
+    //     acel_y: 2,
+    //     acel_z: 3,
+    //   },
+    //   {
+    //     timestamp: 125,
+    //     acel_x: -19,
+    //     acel_y: -2,
+    //     acel_z: -3,
+    //   },
+    //   {
+    //     timestamp: 124,
+    //     acel_x: -1,
+    //     acel_y: 20,
+    //     acel_z: -3,
+    //   },
+    //   {
+    //     timestamp: 129,
+    //     acel_x: -1,
+    //     acel_y: -21,
+    //     acel_z: 3,
+    //   },
+    // ];
 
     const columns = [
       { name: "x_Axys", label: "Eje X", field: "acel_x", align: "right" },
