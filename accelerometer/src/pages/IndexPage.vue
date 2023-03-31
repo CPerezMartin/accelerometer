@@ -2,46 +2,28 @@
   <q-page class="flex flex-center page">
     <h4 class="flex-center justify-evenly">Acelerómetro Beta</h4>
     <div class="visor_group full-width">
-      <p
-        class="visor_title col-12 flex justify-evenly items-center content-center"
-      >
+      <p class="visor_title col-12 flex justify-evenly items-center content-center">
         Visor
       </p>
-      <div
-        class="visor_row col-12 row no-wrap justify-start items-center content-center"
-      >
+      <div class="visor_row col-12 row no-wrap justify-start items-center content-center">
         <label for="acel_x" class="acel_label col-1">X: </label>
         <div id="acel_x" class="col-11">{{ acel_x }}</div>
       </div>
-      <div
-        class="visor_row col-12 row no-wrap justify-start items-center content-center"
-      >
+      <div class="visor_row col-12 row no-wrap justify-start items-center content-center">
         <label for="acel_z" class="acel_label col-1">Y: </label>
         <div id="acel_y" class="col-11">{{ acel_y }}</div>
       </div>
-      <div
-        class="visor_row col-12 row no-wrap justify-start items-center content-center"
-      >
+      <div class="visor_row col-12 row no-wrap justify-start items-center content-center">
         <label for="acel_y" class="acel_label col-1">Z: </label>
         <div id="acel_z" class="col-11">{{ acel_z }}</div>
       </div>
     </div>
     <div class="input_group col-12 row flex justify-evenly">
-      <p
-        class="input_title col-12 flex justify-evenly items-center content-center"
-      >
+      <p class="input_title col-12 flex justify-evenly items-center content-center">
         Cuota mínima de registro
       </p>
       <div class="input_item col-4 row no-wrap justify-evenly full-width">
-        <q-input
-          filled
-          v-model="min"
-          label="Valor de activación"
-          id="input_x"
-          type="number"
-          step="0.5"
-          class="col-3"
-        />
+        <q-input filled v-model="min" label="Valor de activación" id="input_x" type="number" step="0.5" class="col-3" />
         <!-- <q-input
           filled
           v-model="range_y"
@@ -62,44 +44,28 @@
         /> -->
       </div>
     </div>
-    <div
-      class="btn_group fit row wrap justify-evenly items-center content-center"
-    >
-      <q-btn
-        color="primary"
-        label="Iniciar"
-        class="col-auto self-center"
-        @click="startAcel"
-      />
-      <q-btn
-        color="primary"
-        label="Parar"
-        class="col-auto self-center"
-        @click="stopAcel"
-      />
-      <q-btn
-        color="primary"
-        icon-right="archive"
-        label="Exportar"
-        no-caps
-        @click="exportTable"
-      ></q-btn>
+    <div class="btn_group fit row wrap justify-evenly items-center content-center">
+      <q-btn color="primary" label="Iniciar" class="col-auto self-center" @click="startAcel" />
+      <q-btn color="primary" label="Parar" class="col-auto self-center" @click="stopAcel" />
+      <q-btn color="primary" icon-right="archive" label="Exportar" no-caps @click="exportTable"></q-btn>
     </div>
-    <q-table
-      class="acel_table full-width"
-      title="Lecturas Aceleracion"
-      :rows="accelRecords"
-      :columns="columns"
-      no-data-label="No hay datos disponibles"
-      row-key="name"
-      flat
-      bordered
-    />
+
+    <q-table class="acel_table full-width" title="Lecturas Aceleracion" :rows="accelRecords" :columns="columns"
+      no-data-label="No hay datos disponibles" row-key="name" :visible-columns="visibleColumns" flat bordered>
+      <template v-slot:top="">
+        <div class="col q-table__title">Lecturas Aceleracion</div>
+        <q-space></q-space>
+        <div class="col">
+          <q-toggle v-model="visibleColumns" val="timestamp" label="Hora de registro"></q-toggle>
+        </div>
+      </template>
+    </q-table>
+
   </q-page>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { isPlatform } from "@ionic/vue";
 import { exportFile } from "quasar";
 import { Motion } from "@capacitor/motion";
@@ -114,94 +80,101 @@ export default defineComponent({
     let acel_z = 0;
     let min = 0;
 
+    const visibleColumns = ref([
+      "timestamp",
+      "x_Axys",
+      "y_Axys",
+      "z_Axys",
+    ]);
+
     /** array to save acceleration data with timestamp. Format:: timestamp, x, y, z */
     let accelRecords = [];
-    // accelRecords = [
-    //   {
-    //     timestamp: 13,
-    //     acel_x: 10,
-    //     acel_y: 2,
-    //     acel_z: 3,
-    //   },
-    //   {
-    //     timestamp: 124,
-    //     acel_x: -11,
-    //     acel_y: 2,
-    //     acel_z: 3,
-    //   },
-    //   {
-    //     timestamp: 125,
-    //     acel_x: 12,
-    //     acel_y: -2,
-    //     acel_z: 3,
-    //   },
-    //   {
-    //     timestamp: 126,
-    //     acel_x: 14,
-    //     acel_y: 2,
-    //     acel_z: -3,
-    //   },
-    //   {
-    //     timestamp: 121,
-    //     acel_x: -13,
-    //     acel_y: -2,
-    //     acel_z: -3,
-    //   },
-    //   {
-    //     timestamp: 122,
-    //     acel_x: 15,
-    //     acel_y: -2,
-    //     acel_z: 3,
-    //   },
-    //   {
-    //     timestamp: 120,
-    //     acel_x: -16,
-    //     acel_y: 2,
-    //     acel_z: 3,
-    //   },
-    //   {
-    //     timestamp: 123,
-    //     acel_x: 17,
-    //     acel_y: 2,
-    //     acel_z: -3,
-    //   },
-    //   {
-    //     timestamp: 127,
-    //     acel_x: 18,
-    //     acel_y: 2,
-    //     acel_z: 3,
-    //   },
-    //   {
-    //     timestamp: 125,
-    //     acel_x: -19,
-    //     acel_y: -2,
-    //     acel_z: -3,
-    //   },
-    //   {
-    //     timestamp: 124,
-    //     acel_x: -1,
-    //     acel_y: 20,
-    //     acel_z: -3,
-    //   },
-    //   {
-    //     timestamp: 129,
-    //     acel_x: -1,
-    //     acel_y: -21,
-    //     acel_z: 3,
-    //   },
-    // ];
+    accelRecords = [
+      {
+        timestamp: 13,
+        acel_x: 10,
+        acel_y: 2,
+        acel_z: 3,
+      },
+      {
+        timestamp: 124,
+        acel_x: -11,
+        acel_y: 2,
+        acel_z: 3,
+      },
+      {
+        timestamp: 125,
+        acel_x: 12,
+        acel_y: -2,
+        acel_z: 3,
+      },
+      {
+        timestamp: 126,
+        acel_x: 14,
+        acel_y: 2,
+        acel_z: -3,
+      },
+      {
+        timestamp: 121,
+        acel_x: -13,
+        acel_y: -2,
+        acel_z: -3,
+      },
+      {
+        timestamp: 122,
+        acel_x: 15,
+        acel_y: -2,
+        acel_z: 3,
+      },
+      {
+        timestamp: 120,
+        acel_x: -16,
+        acel_y: 2,
+        acel_z: 3,
+      },
+      {
+        timestamp: 123,
+        acel_x: 17,
+        acel_y: 2,
+        acel_z: -3,
+      },
+      {
+        timestamp: 127,
+        acel_x: 18,
+        acel_y: 2,
+        acel_z: 3,
+      },
+      {
+        timestamp: 125,
+        acel_x: -19,
+        acel_y: -2,
+        acel_z: -3,
+      },
+      {
+        timestamp: 124,
+        acel_x: -1,
+        acel_y: 20,
+        acel_z: -3,
+      },
+      {
+        timestamp: 129,
+        acel_x: -1,
+        acel_y: -21,
+        acel_z: 3,
+      },
+    ];
 
     const columns = [
-      { name: "x_Axys", label: "Eje X", field: "acel_x", align: "right" },
-      { name: "y_Axys", label: "Eje Y", field: "acel_y", align: "right" },
-      { name: "z_Axys", label: "Eje Z", field: "acel_z", align: "right" },
       {
         name: "timestamp",
         label: "Hora de registro",
         field: "timestamp",
-        align: "right",
+        align: "left",
         sortable: true
       },
+      { name: "x_Axys", label: "Eje X", field: "acel_x", align: "left" },
+      { name: "y_Axys", label: "Eje Y", field: "acel_y", align: "left" },
+      { name: "z_Axys", label: "Eje Z", field: "acel_z", align: "left" },
     ];
     return {
       acel_x,
@@ -210,6 +183,7 @@ export default defineComponent({
       min,
       accelRecords,
       columns,
+      visibleColumns
     };
   },
   computed: {
@@ -354,11 +328,13 @@ export default defineComponent({
     .visor_row {
       margin: 0 0.5em;
       font-size: 14pt;
+
       .acel_label {
         font-weight: bold;
       }
     }
   }
+
   .input_group {
     margin-bottom: 1em;
 
@@ -367,8 +343,9 @@ export default defineComponent({
       font-weight: bold;
     }
   }
-  .btn_group {
-  }
+
+  .btn_group {}
+
   button {
     margin: 0.25em;
   }
@@ -377,7 +354,7 @@ export default defineComponent({
     margin: 1em 0;
     height: 310px;
 
-    thead  tr:first-child th{
+    thead tr:first-child th {
       background-color: aliceblue;
     }
 
@@ -385,6 +362,7 @@ export default defineComponent({
       position: sticky;
       z-index: 1;
     }
+
     thead tr:first-child th {
       top: 0;
     }
@@ -392,8 +370,10 @@ export default defineComponent({
     &.q-table--loading thead tr:last-child th {
       top: 48px;
     }
+
     tbody {
       scroll-margin-top: 48px;
+
       tr:nth-child(5n) {
         background-color: aliceblue;
       }
